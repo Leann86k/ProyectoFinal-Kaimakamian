@@ -1,0 +1,17 @@
+.producto {
+  border-top: 1px solid #ddd;
+  padding: 10px;
+  margin-top: 20px;
+}
+.vaciarCarrito {
+  margin-top: 10px;
+  padding: 5px 10px;
+  border: none;
+  background-color: #dc3545;
+  color: white;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.vaciarCarrito:hover {
+  background-color: #c82333;
+}

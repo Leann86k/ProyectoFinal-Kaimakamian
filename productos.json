@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "nombre": "Hueso de juguete para perro",
+    "precio": 5000,
+    "imagenurl": ".assets/photos/huesojuguete.webp"
+  },
+  {
+    "id": 2,
+    "nombre": "Ratón de juguete para gato",
+    "precio": 3000,
+    "imagen": "./assets/photos/ratonjuguete.webp"
+  },
+  {
+    "id": 4,
+    "nombre": "Alimento de gato 3 kg (Gatti)",
+    "precio": 15000,
+    "imagen": "./assets/photos/Gatti 3kg.webp"
+  },
+  {
+    "id": 5,
+    "nombre": "Alimento de perro 8 kg (Cat Chow)",
+    "precio": 20000,
+    "imagen": "./assets/photos/Dog chow 8kg.webp"
+  },
+  {
+    "id": 6,
+    "nombre": "Alimento de gato 8 kg (Cat Chow)",
+    "precio": 25000,
+    "imagen": "./assets/photos/Cat chow 8kg.webp"
+  },
+  {
+    "id": 8,
+    "nombre": "Alimento de gato 8 kg (Excelent)",
+    "precio": 32000,
+    "imagen": "./assets/photos/Excellent 8kg.webp"
+  }
+]
