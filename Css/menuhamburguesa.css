@@ -81,6 +81,18 @@ body {
   height: auto;
 }
 
+footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-image: linear-gradient(
+    to bottom,
+    lightblue,
+    rgb(43, 138, 232),
+    lightblue
+  );
+}
+
 @media screen and (max-width: 550px) {
   .menu-button {
     display: block;
