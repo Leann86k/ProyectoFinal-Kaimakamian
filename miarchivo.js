@@ -118,10 +118,7 @@ comprarButton.addEventListener("click", () => {
           text: "Sus productos fueron comprados con exito",
           icon: "success",
         });
-      } else if (
-        /* Read more about handling dismissals below */
-        result.dismiss === Swal.DismissReason.cancel
-      ) {
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
         swalWithBootstrapButtons.fire({
           title: "Compra cancelada",
           text: "",
@@ -157,6 +154,23 @@ const eliminarDelCarrito = (index) => {
   localStorage.setItem("carrito", JSON.stringify(carrito));
   mostrarCarrito();
 };
+
+// Función para vaciar el carrito
+const vaciarCarrito = () => {
+  carrito = [];
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+  mostrarCarrito();
+  Swal.fire({
+    title: "Carrito vaciado",
+    text: "Todos los productos han sido eliminados.",
+    icon: "success",
+    confirmButtonText: "OK",
+  });
+};
+
+// Botón Borrar todo
+const vaciarButton = document.getElementById("vaciarButton");
+vaciarButton.addEventListener("click", vaciarCarrito);
 
 // Inicializar la página
 mostrarProductos();
