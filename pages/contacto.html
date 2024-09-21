@@ -31,15 +31,42 @@
     <div id="productos"></div>
    
 
-    <h2>Carrito de Compras</h2>
-    <ul id="cart-list"></ul>
-    
- 
-     
-      <button id="comprarButton">comprar</button>
-      <button id="vaciarButton">Borrar todo</button>
-   
-    <h2 id="resultado"></h2> 
+    <div class="form-container">
+      <h2>¿Cómo te podemos ayudar?</h2>
+      <div>
+        <p>
+          Por favor, te pedimos que llenes la mayor cantidad de datos para
+          resolver tu consulta lo más completa posible, muchas gracias
+        </p>
+      </div>
+      <form>
+        <div class="form-item">
+          <label for="userName"> Apellido y nombre </label>
+          <input id="userName" type="text" placeholder="Ingresa tu apellido y nombre" required="">
+        </div>
+      
+        <div class="form-item">
+          <label for="userPhone"> Teléfono </label>
+          <input id="userPhone" type="number" placeholder="Ingresa tu teléfono" required="">
+        </div>
+        <div class="form-item">
+          <label for="userMail"> Correo electrónico </label>
+          <input id="userMail" type="text" placeholder="Example@gmail.com" required="">
+        </div>
+        <div class="form-item">
+          <label for="userDescription"> ¿Con qué te podemos ayudar?</label>
+          <textarea name="userDescription" id="userDescription" cols="20" rows="10" placeholder="Tu consulta aquí"></textarea>
+         </div>
+        </div>
+
+        <div>
+          <input type="submit" value="Enviar consulta">
+          <input type="reset" value="Limpiar todo">
+        </div>
+      </form>
+    </div>
+
+
 
 
     <footer class="footer">
