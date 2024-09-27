@@ -1,151 +1,69 @@
-// Array de productos
-const productos = [
-  {
-    id: 1,
-    nombre: "Hueso de juguete para perro",
-    precio: 5000,
-    imagen: "./assets/photos/huesojuguete.webp",
-  },
-  {
-    id: 2,
-    nombre: "Ratón de juguete para gato",
-    precio: 3000,
-    imagen: "./assets/photos/ratonjuguete.webp",
-  },
-  {
-    id: 4,
-    nombre: "Alimento de gato 3 kg (Gatti)",
-    precio: 15000,
-    imagen: "./assets/photos/Gatti 3kg.webp",
-  },
-  {
-    id: 5,
-    nombre: "Alimento de perro 8 kg (Cat Chow)",
-    precio: 20000,
-    imagen: "./assets/photos/Dog chow 8kg.webp",
-  },
-  {
-    id: 6,
-    nombre: "Alimento de gato 8 kg (Cat Chow)",
-    precio: 25000,
-    imagen: "./assets/photos/Cat chow 8kg.webp",
-  },
-  {
-    id: 8,
-    nombre: "Alimento de gato 8 kg (Excelent)",
-    precio: 32000,
-    imagen: "./assets/photos/Excellent 8kg.webp",
-  },
-];
-
-// Carrito de compras
 let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+let productos = [];
+
+// Función para obtener productos desde el archivo JSON
+const obtenerProductos = async () => {
+  try {
+    const response = await fetch("productos.json");
+    if (!response.ok) throw new Error("Error en la red");
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+};
 
 // Función para mostrar los productos
-const mostrarProductos = () => {
+const mostrarProductos = (productos) => {
   const productosContainer = document.getElementById("productos");
-  productosContainer.innerHTML = "";
-  productos.forEach((producto) => {
-    const productoDiv = document.createElement("div");
-    productoDiv.className = "product";
-    productoDiv.innerHTML = `
-<div class="card">
-  <div class="row g-0">
-    <div class="col-5 col-sm-4">
-      <img src="${
-        producto.imagen
-      }" class="img-fluid w-20 img" alt="card-horizontal-image">
-    </div>
-    <div class="col-7 col-sm-8">
-      <div class="card-body">
-        <h5 class="card-title">${producto.nombre}</h5>
-        <p class="card-text">$${producto.precio.toFixed(2)}</p>
-  
-      </div>
-    </div>
-  </div>
-</div>
-          
-  <button onclick="agregarAlCarrito(${
-    producto.id
-  })">Agregar al carrito</button>  
-  `;
-    productosContainer.appendChild(productoDiv);
-  });
+  productosContainer.innerHTML = productos
+    .map(
+      ({ id, imagen, nombre, precio }) => `
+   
+            <div class="card rounded float-start justify-content-center align-items-center d-flex">
+                <img class="img-fluid " src="${imagen}" alt="${nombre}">
+                <h5>${nombre}</h5>
+                <p>$${precio.toFixed(2)}</p>
+                <button onclick="agregarAlCarrito(${id})">Agregar al carrito</button>
+            </div>
+       
+    `
+    )
+    .join("");
 };
-
-//hacer acá lo de fetch, productos.json//
 
 // Función para agregar un producto al carrito
-
 const agregarAlCarrito = (id) => {
   const producto = productos.find((p) => p.id === id);
-  carrito.push(producto);
-  Toastify({
-    text: `${producto.nombre} se agregó al carrito`,
-    duration: 2500,
-  }).showToast();
-  localStorage.setItem("carrito", JSON.stringify(carrito));
-  mostrarCarrito();
+  if (producto) {
+    carrito.push(producto);
+    Toastify({
+      text: `${producto.nombre} se agregó al carrito`,
+      duration: 2500,
+    }).showToast();
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+    mostrarCarrito();
+  }
 };
-
-//Confirmación de compra
-
-const comprarButton = document.getElementById("comprarButton");
-
-comprarButton.addEventListener("click", () => {
-  const swalWithBootstrapButtons = Swal.mixin({
-    customClass: {
-      confirmButton: "btn btn-success",
-      cancelButton: "btn btn-danger",
-    },
-    buttonsStyling: false,
-  });
-  swalWithBootstrapButtons
-    .fire({
-      title: `¿Confirma la compra con monto $${mostrarCarrito()}?`,
-      text: "No vas a poder revertir la operación!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Sí, confirmar la compra",
-      cancelButtonText: "No, ¡cancelar!",
-      reverseButtons: true,
-    })
-    .then((result) => {
-      if (result.isConfirmed) {
-        swalWithBootstrapButtons.fire({
-          title: "Compra realizada!",
-          text: "Sus productos fueron comprados con exito",
-          icon: "success",
-        });
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        swalWithBootstrapButtons.fire({
-          title: "Compra cancelada",
-          text: "",
-          icon: "error",
-        });
-      }
-    });
-});
 
 // Función para mostrar el carrito
 const mostrarCarrito = () => {
   const cartList = document.getElementById("cart-list");
-  cartList.innerHTML = "";
-  carrito.forEach((producto, index) => {
-    const item = document.createElement("li");
-    item.className = "cart-item";
-    item.innerHTML = `
-            ${producto.nombre} - $${producto.precio.toFixed(2)}
+  cartList.innerHTML = carrito
+    .map(
+      ({ nombre, precio }, index) => `
+        <li class="cart-item">
+            ${nombre} - $${precio.toFixed(2)}
             <button onclick="eliminarDelCarrito(${index})">Eliminar</button>
-        `;
-    cartList.appendChild(item);
-  });
-  const total = carrito.reduce((sum, producto) => sum + producto.precio, 0);
+        </li>
+    `
+    )
+    .join("");
+
+  const total = carrito.reduce((sum, { precio }) => sum + precio, 0);
   document.getElementById("resultado").textContent = `Total: $${total.toFixed(
     2
   )}`;
-  return total;
 };
 
 // Función para eliminar un producto del carrito
@@ -162,28 +80,58 @@ const vaciarCarrito = () => {
   mostrarCarrito();
   Swal.fire({
     title: "Carrito vaciado",
-    text: "Todos los productos han sido eliminados.",
+    text: "OPERACIÓN REALIZADA CON EXITO",
     icon: "success",
     confirmButtonText: "OK",
   });
 };
 
 // Botón Borrar todo
-const vaciarButton = document.getElementById("vaciarButton");
-vaciarButton.addEventListener("click", vaciarCarrito);
+document
+  .getElementById("vaciarButton")
+  .addEventListener("click", vaciarCarrito);
 
-// Inicializar la página
-mostrarProductos();
-mostrarCarrito();
+// Confirmación de compra
+document.getElementById("comprarButton").addEventListener("click", () => {
+  const total = carrito.reduce((sum, { precio }) => sum + precio, 0);
+  if (total === 0) {
+    Swal.fire({
+      title: "El carrito está vacío",
+      text: "Agrega productos antes de comprar.",
+      icon: "warning",
+      confirmButtonText: "OK",
+    });
+    return;
+  }
 
-// Manejo del menú hamburguesa
-document.querySelector(".menu-button")?.addEventListener("click", () => {
-  const menu = document.querySelector(".menu");
-  menu?.classList.toggle("open");
+  Swal.fire({
+    title: `¿Confirma la compra con monto $${total.toFixed(2)}?`,
+    text: "No podrás revertir la operación!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonText: "Sí, confirmar la compra",
+    cancelButtonText: "No, ¡cancelar!",
+    reverseButtons: true,
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire({
+        title: "Compra realizada!",
+        text: "Sus productos fueron comprados con éxito.",
+        icon: "success",
+      });
+      vaciarCarrito();
+    } else if (result.dismiss === Swal.DismissReason.cancel) {
+      Swal.fire({
+        title: "Compra cancelada",
+        icon: "error",
+      });
+    }
+  });
 });
 
-const yearElement = document.getElementById("current_year");
-
-const currentYear = new Date().getFullYear();
-
-yearElement.textContent = currentYear;
+// Inicializar la página
+document.addEventListener("DOMContentLoaded", async () => {
+  productos = await obtenerProductos();
+  mostrarProductos(productos);
+  mostrarCarrito();
+});

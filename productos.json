@@ -3,7 +3,7 @@
     "id": 1,
     "nombre": "Hueso de juguete para perro",
     "precio": 5000,
-    "imagenurl": ".assets/photos/huesojuguete.webp"
+    "imagen": "/assets/photos/huesojuguete.webp"
   },
   {
     "id": 2,
