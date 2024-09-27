@@ -1,7 +1,7 @@
 let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 let productos = [];
 
-// Función para obtener productos desde el archivo JSON
+// Función para obtener productos desde el archivo JSON local
 const obtenerProductos = async () => {
   try {
     const response = await fetch("productos.json");
