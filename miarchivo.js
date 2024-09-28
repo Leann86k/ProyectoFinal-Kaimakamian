@@ -112,6 +112,11 @@ document.getElementById("comprarButton").addEventListener("click", () => {
     showCancelButton: true,
     confirmButtonText: "Sí, confirmar la compra",
     cancelButtonText: "No, ¡cancelar!",
+    customClass: {
+      confirmButton: "boton-confirm",
+      cancelButton: "boton-cancel",
+    },
+
     reverseButtons: true,
   }).then((result) => {
     if (result.isConfirmed) {

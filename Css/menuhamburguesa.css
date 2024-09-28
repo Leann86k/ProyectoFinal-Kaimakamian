@@ -132,6 +132,16 @@ textarea {
   margin-bottom: 10px;
 }
 
+.boton-confirm {
+  background-color: green !important; /* Color de fondo verde */
+  color: white !important; /* Color de texto blanco */
+}
+
+.boton-cancel {
+  background-color: red !important; /* Color de fondo rojo */
+  color: white !important; /* Color de texto blanco */
+}
+
 @media screen and (max-width: 550px) {
   .menu-button {
     display: block;
