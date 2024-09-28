@@ -94,6 +94,7 @@ document
 // Confirmación de compra
 document.getElementById("comprarButton").addEventListener("click", () => {
   const total = carrito.reduce((sum, { precio }) => sum + precio, 0);
+
   if (total === 0) {
     Swal.fire({
       title: "El carrito está vacío",
@@ -119,7 +120,6 @@ document.getElementById("comprarButton").addEventListener("click", () => {
         text: "Sus productos fueron comprados con éxito.",
         icon: "success",
       });
-      vaciarCarrito();
     } else if (result.dismiss === Swal.DismissReason.cancel) {
       Swal.fire({
         title: "Compra cancelada",
